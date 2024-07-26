@@ -24,9 +24,9 @@ class MainApp extends StatelessWidget {
           colorScheme: theme.colorScheme
               .copyWith(secondary: Colors.amber, primary: Colors.indigo),
         ),
-        home: PlacesListScreen(),
+        home: const PlacesListScreen(),
         routes: {
-          AppRoutes.place_form: (ctx) => PlaceFormScreen(),
+          AppRoutes.place_form: (ctx) => const PlaceFormScreen(),
         },
       ),
     );
