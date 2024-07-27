@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:great_places/utils/location_util.dart';
 import 'package:location/location.dart';
 
 class LocationInput extends StatefulWidget {
@@ -13,8 +15,22 @@ class _LocationInputState extends State<LocationInput> {
 
   Future<void> _getCurrentUserLocation() async {
     final locData = await Location().getLocation();
-    print(locData.latitude);
-    print(locData.longitude);
+    final googleApiKey = dotenv.env['GOOGLE_API_KEY'];
+
+    if (googleApiKey == null) {
+      throw Exception('API Key not found');
+    }
+
+    final staticMapImageLocationUtil =
+        LocationUtil.generateLocationPreviewImage(
+      latitude: locData.latitude!,
+      longitude: locData.longitude!,
+      googleApiKey: googleApiKey,
+    );
+
+    setState(() {
+      _previewImageUrl = staticMapImageLocationUtil;
+    });
   }
 
   @override
